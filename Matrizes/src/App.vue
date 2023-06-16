@@ -21,19 +21,28 @@ function AtualizarTamanhoMatriz() {
 }
 
 function calcular() {
-  console.log(maiorNumeroDeCadaColuna.value)
+  console.log(colunasMatriz.value)
 
-  maiorNumeroDeCadaColuna.value = []
+  maiorNumeroDeCadaColuna.value = [];
 
-  for (let n = 0; n < colunasMatriz.value.length; n++) {
+  for (let n = 0; n < colunasMatriz.value; n++) {
+
+    console.log(n)
 
     let maiorNumero = -Infinity
 
-    for (let i = 0; i < matriz.value.length; i++) {
+     for (let i = 0; i < matriz.value.length; i++) {
+
+      if (matriz.value[i][n] < 0) {
+        matriz.value[i][n] = matriz.value[i][n] * -1
+      }
+
       if (matriz.value[i][n] > maiorNumero) {
         maiorNumero = matriz.value[i][n]
       }
     }
+
+    console.log(maiorNumero)
 
     maiorNumeroDeCadaColuna.value.push(maiorNumero)
   }
@@ -42,16 +51,8 @@ function calcular() {
 
 <template>
   <div class="all">
-    <input
-      type="number"
-      placeholder="Digite a quantidade de linhas da matriz"
-      v-model="linhasMatrizEmInput"
-    />
-    <input
-      type="number"
-      placeholder="Digite a quantidade de colunas da matriz"
-      v-model="colunasMatrizEmInput"
-    />
+    <input type="number" placeholder="Digite a quantidade de linhas da matriz" v-model="linhasMatrizEmInput" />
+    <input type="number" placeholder="Digite a quantidade de colunas da matriz" v-model="colunasMatrizEmInput" />
 
     <br />
 
@@ -63,22 +64,18 @@ function calcular() {
 
     <div class="matriz">
       <div class="linhas" v-for="(linha, indexLinha) in linhasMatriz" :key="indexLinha">
-        <input
-          type="number"
-          v-for="(coluna, indexColuna) in colunasMatriz"
-          :key="indexColuna"
-          class="inputs"
-          v-model="matriz[indexLinha][indexColuna]"
-        />
+        <input type="number" v-for="(coluna, indexColuna) in colunasMatriz" :key="indexColuna" class="inputs"
+          v-model="matriz[indexLinha][indexColuna]" />
       </div>
 
       <button @click="calcular()">Calcular</button>
 
-      {{ matriz }}
-
       <br />
 
-      {{ maiorNumeroDeCadaColuna }}
+      <span v-for="maiorNumero, index of maiorNumeroDeCadaColuna" :key="index">
+        Maior Número da coluna {{ index + 1 }}:
+        {{ maiorNumero }} <br>
+      </span>
     </div>
   </div>
 </template>
