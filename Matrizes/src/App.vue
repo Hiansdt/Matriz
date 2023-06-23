@@ -31,14 +31,16 @@ function calcular() {
 
     let maiorNumero = -Infinity
 
-     for (let i = 0; i < matriz.value.length; i++) {
+    for (let i = 0; i < matriz.value.length; i++) {
 
-      if (matriz.value[i][n] < 0) {
-        matriz.value[i][n] = matriz.value[i][n] * -1
+      let numero = matriz.value[i][n]
+
+      if (numero < 0) {
+        numero = numero * -1
       }
 
-      if (matriz.value[i][n] > maiorNumero) {
-        maiorNumero = matriz.value[i][n]
+      if (numero > maiorNumero) {
+        maiorNumero = numero
       }
     }
 
@@ -46,6 +48,8 @@ function calcular() {
 
     maiorNumeroDeCadaColuna.value.push(maiorNumero)
   }
+
+  console.log(matriz.value)
 }
 </script>
 
@@ -56,10 +60,6 @@ function calcular() {
 
     <br />
 
-    <span>{{ linhasMatriz }}x{{ colunasMatriz }}</span>
-
-    <br />
-
     <button @click="AtualizarTamanhoMatriz()">Confirmar Tamanho</button>
 
     <div class="matriz">
@@ -67,16 +67,15 @@ function calcular() {
         <input type="number" v-for="(coluna, indexColuna) in colunasMatriz" :key="indexColuna" class="inputs"
           v-model="matriz[indexLinha][indexColuna]" />
       </div>
-
-      <button @click="calcular()">Calcular</button>
-
-      <br />
-
-      <span v-for="maiorNumero, index of maiorNumeroDeCadaColuna" :key="index">
-        Maior Número da coluna {{ index + 1 }}:
-        {{ maiorNumero }} <br>
-      </span>
     </div>
+    <button @click="calcular()">Calcular</button>
+
+    <br />
+
+    <span v-for="maiorNumero, index of maiorNumeroDeCadaColuna" :key="index">
+      Maior Número da coluna {{ index + 1 }}:
+      {{ maiorNumero }} <br>
+    </span>
   </div>
 </template>
 
